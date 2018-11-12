@@ -56,7 +56,14 @@ this.setState({[event.target.name]: event.target.value});
 
 componentDidMount = () => {
   const balanceBase = '0x06e3095fee6a56F1dc38Db6ec6dDcf7CFd0409f1';//address from https://etherscan.io/
-    window.web3.fromWei(window.web3.eth.getBala)
+    window.web3.fromWei.getBalance(balanceBase, function (error, balance) { 
+                if(error)
+                    console.log('Error-->',error);
+                else{
+                    console.log('Balance :',balance.toNumber());
+                   
+                }
+            });
  
 }
 
@@ -129,7 +136,7 @@ return (
   <div style={{ display: 'table-caption' }}>
         <form onSubmit={this.handleSubmit}>
            <TextField 
-            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="User Address" name="senderAddress" value={this.state.value} onChange={this.handleChange}
+            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="User Address²" name="senderAddress" value={this.state.value} onChange={this.handleChange}
            />
               <TextField 
             type="text"  id="outlined-name" className={classes.textField}  margin="normal" label="Account Balance" name="amount" value={this.state.value} onChange={this.handleChange}
