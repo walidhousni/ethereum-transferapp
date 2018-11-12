@@ -9,6 +9,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Button from '../Button/Button';
 
 
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -37,18 +38,22 @@ function typographyV1Theme(theme) {
   });
 }
 
-
-
 class Home extends Component  {
+
+  
+
+  
   constructor(props) {
     super(props);
-    this.state = {senderAddress: '',recieverAddress:'', amount:''};
+    this.state = {senderAddress: '',recieverAddress:'', amount:'', balanceShow: ''};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 handleChange(event) {
 this.setState({[event.target.name]: event.target.value});
 }
+
+
 
 handleSubmit(event) {
     event.preventDefault();
@@ -83,7 +88,10 @@ handleSubmit(event) {
                 to:  this.state.recieverAddress,
                 value:  this.state.amount
             }).then(function(receipt){
-                console.log(receipt)
+               window.web3.eth.getBalance('' + this.state.recieverAddress + '')
+               .then(function(result) {
+                this.setState({ balanceShow: result })
+               })
             }).catch(e => console.log(e));;
             console.log(1)
         }
@@ -108,7 +116,7 @@ render() {
   let link;
   if(this.state.senderAddress){
     link =(
-        <a href={d} target="_blank" rel="noopener">View Account On EtherScan</a>
+        <a style={{ display: 'flex' }} href={d} target="_blank" rel="noopener noreferrer">View Account On EtherScan</a>
       )
   } else{
       link = null;
@@ -117,13 +125,13 @@ return (
   <div style={{ display: 'table-caption' }}>
         <form onSubmit={this.handleSubmit}>
            <TextField 
-            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="Sender Address" name="senderAddress" value={this.state.value} onChange={this.handleChange}
+            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="User Addresse" name="senderAddress" value={this.state.value} onChange={this.handleChange}
            />
               <TextField 
             type="text"  id="outlined-name" className={classes.textField}  margin="normal" label="Account Balance" name="amount" value={this.state.value} onChange={this.handleChange}
            />
              <TextField 
-            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="Sender Address" label="Receiver Address" name="recieverAddress" value={this.state.value} onChange={this.handleChange}
+            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="Receiver Address" name="recieverAddress" value={this.state.value} onChange={this.handleChange}
            />
             <Button type="submit" variant="outlined" size="large"  color="primary" text="send" value="Send" />
            {link}
@@ -136,7 +144,7 @@ return (
           Send To friend
         </Typography>
         <Typography variant="button" gutterBottom>
-          0,00 Ether
+           {this.state.balanceShow}
         </Typography>
       </div>
     </MuiThemeProvider>

@@ -27,4 +27,8 @@ const ButtonAll = (props) => {
     );
 };
 
+ButtonAll.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
 export default withStyles(styles)(ButtonAll);
