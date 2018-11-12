@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import styless from './Home.module.css'
 
 import Button from '../Button/Button';
 
@@ -53,6 +54,12 @@ handleChange(event) {
 this.setState({[event.target.name]: event.target.value});
 }
 
+componentDidMount = () => {
+  const balanceBase = '0x06e3095fee6a56F1dc38Db6ec6dDcf7CFd0409f1';//address from https://etherscan.io/
+    window.web3.fromWei(window.web3.eth.getBala)
+ 
+}
+
 
 
 handleSubmit(event) {
@@ -79,7 +86,7 @@ handleSubmit(event) {
                 console.log(2)
             }
         }
-        // Legacy dapp browsers...
+      
         else if (window.web3) {
             window.web3 = new Web3(window.web3.currentProvider);
             // Acccounts always exposed
@@ -88,10 +95,7 @@ handleSubmit(event) {
                 to:  this.state.recieverAddress,
                 value:  this.state.amount
             }).then(function(receipt){
-               window.web3.eth.getBalance('' + this.state.recieverAddress + '')
-               .then(function(result) {
-                this.setState({ balanceShow: result })
-               })
+              console.log(receipt)
             }).catch(e => console.log(e));;
             console.log(1)
         }
@@ -116,7 +120,7 @@ render() {
   let link;
   if(this.state.senderAddress){
     link =(
-        <a style={{ display: 'flex' }} href={d} target="_blank" rel="noopener noreferrer">View Account On EtherScan</a>
+        <a className={styless.a} style={{ display: 'flex' }} href={d} target="_blank" rel="noopener noreferrer">View Account On EtherScan</a>
       )
   } else{
       link = null;
@@ -125,7 +129,7 @@ return (
   <div style={{ display: 'table-caption' }}>
         <form onSubmit={this.handleSubmit}>
            <TextField 
-            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="User Addresse" name="senderAddress" value={this.state.value} onChange={this.handleChange}
+            type="text" id="outlined-name" className={classes.textField}  margin="normal" label="User Address" name="senderAddress" value={this.state.value} onChange={this.handleChange}
            />
               <TextField 
             type="text"  id="outlined-name" className={classes.textField}  margin="normal" label="Account Balance" name="amount" value={this.state.value} onChange={this.handleChange}
@@ -133,7 +137,7 @@ return (
              <TextField 
             type="text" id="outlined-name" className={classes.textField}  margin="normal" label="Receiver Address" name="recieverAddress" value={this.state.value} onChange={this.handleChange}
            />
-            <Button type="submit" variant="outlined" size="large"  color="primary" text="send" value="Send" />
+         
            {link}
        
         <hr />
@@ -143,11 +147,14 @@ return (
         <Typography variant="button" gutterBottom>
           Send To friend
         </Typography>
-        <Typography variant="button" gutterBottom>
+        <Typography className={classes.SendFriendText} variant="button" gutterBottom>
            {this.state.balanceShow}
         </Typography>
       </div>
     </MuiThemeProvider>
+    <Button style={{ width: '100%' }} className={styless.Button} text="send" variant="contained" type="submit" color="primary" value="Send" >
+      </Button>
+           
         </div>
         </form>
   </div>

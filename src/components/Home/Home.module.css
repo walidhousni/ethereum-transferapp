@@ -1,0 +1,16 @@
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+    background-color: #4f95da;
+}
+
+.Button {
+    width: 100% !important;
+}
+
+.SendFriendText {
+    color: #7f8c8d;
+}
