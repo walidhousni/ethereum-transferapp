@@ -14,4 +14,4 @@ You will also see any lint errors in the console.
 
 # Screenshots of Transactions
 
-![img](https://imgur.com/a/KFjZfW4)
+![img](public/images/transactions.png)
